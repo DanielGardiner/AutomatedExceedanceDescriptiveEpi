@@ -1,0 +1,799 @@
+---
+title: "Descriptive Epidemiology"
+output: 
+  word_document:
+    fig_width: 10
+    fig_height: 8
+    reference_docx: PHE_template.docx
+---
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+
+#----------------------------------------------------------------------------
+# mandatory parameters
+
+organism.name.for.title = "Cryptosporidium parvum"
+
+end.reporting.date = "2017-01-24"
+
+recent.historic.weeks = 10
+
+historic.year = 2013
+
+data.file.name = "Dummy_data.csv"
+
+
+#----------------------------------------------------------------------------
+# optional filter parameters
+
+# e.g. sex = c("Female",  "Male", "Unknown")
+sex = NULL
+
+# e.g. age = 19
+age.lower = NULL 
+
+# e.g. age = 50 
+age.upper = NULL 
+
+# e.g. local.authority = c("Exeter", "Cornwall")
+local.authority = NULL
+
+# e.g.laboratory = c("DERRIFORD HOSP. (PLYMOUTH)", "OXFORD JOHN RADCLIFFE") 
+laboratory = NULL 
+
+# e.g. requesting.organisation = c("GENERAL PRACTITIONER", "HOSPITAL INPATIENT")
+requesting.organisation = NULL 
+
+# e.g. specimen.type = c("STOOL", "FAECES")
+specimen.type = NULL 
+
+# travel = c("Yes", "No", "Unknown")
+travel = NULL 
+
+
+#----------------------------------------------------------------------------
+# optional figure aesthetic parameters
+
+day.label.break = 2
+
+week.label.break = 1
+
+month.label.break = 0
+
+
+recent.tile.plot.text = TRUE
+
+historic.tile.plot.text = TRUE
+
+#----------------------------------------------------------------------------
+
+wd = "C:/Users/daniel.gardiner/Desktop/Temp"
+
+
+setwd(paste0(wd, "/R"))
+source("z01.master.source.R")
+```
+
+
+
+
+
+
++ **Data source:** SGSS
++ **Date report produced**: `r format(Sys.Date(), "%d/%m/%Y")`
++ **Organism:** `r organism.name.for.title`
++ **End of reporting period:** `r format(end.reporting.date, "%d/%m/%Y")`
++ **Centre:** South West
++ **Sex:** `r bullet.sex`
++ **Age:** `r bullet.age`
++ **Local authority:** `r bullet.la`
++ **Laboratory:** `r bullet.lab`
++ **Requesting organisation:** `r bullet.request`
++ **Specimen type:** `r bullet.spectype`
++ **Travel status:** `r bullet.travel`
+
+
+ 
+#####
+
+# Recent cases
+
+This section describes cases with specimen dates between  `r recent.date.range`.
+
+## Figure 1: Epidemic curve of cases `r recent.date.range` by day
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4}
+epicurve.all.recent
+```
+
+
+## Figure 3: Epidemic curve of cases `r recent.date.range` by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.all.recent.week
+```
+
+
+#####
+
+
+## Figure 5: Tile plot of cases `r recent.date.range` by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=5}
+tile.plot.all.all.recent.week
+```
+
+
+#####
+
+## Figure 5: Epidemic curve of cases `r recent.date.range` by sex by day
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=5}
+epicurve.sex.recent
+```
+
+
+## Figure 7: Epidemic curve of cases `r recent.date.range` by sex by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.sex.recent.week
+```
+
+
+#####
+
+
+## Figure 5: Tile plot of cases `r recent.date.range` by sex by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=5}
+tile.plot.all.sex.recent.week
+```
+
+
+#####
+
+
+## Figure 9: Epidemic curve of cases `r recent.date.range` by age group by day
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.age.grp.recent
+```
+
+
+
+## Figure 11: Epidemic curve of cases `r recent.date.range` by age group by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.age.grp.recent.week
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by age group by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=9}
+tile.plot.all.age.grp.recent.week
+```
+
+
+
+#####
+
+
+## Figure 16: Age-sex distribution of cases, `r recent.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=7}
+age.sex.pyrimid.recent
+```
+
+A total of `r age.sex.pyrimid.recent.missing` cases are missing  in the figure above due to either missing sex and age group information.
+
+
+
+#####
+
+## Figure 19: Tile plot of cases `r recent.date.range` by local authority by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=10}
+tile.plot.all.local.authority.recent.week
+```
+
+#####
+
+## Figure 20: Tile plot of cases `r recent.date.range` by local authority by week, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=10}
+tile.plot.row.local.authority.recent.week
+```
+
+
+#####
+
+## Figure 5: Tile plot of cases `r recent.date.range` by laboratory by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=10}
+tile.plot.all.laboratory.recent.week
+```
+
+#####
+
+## Figure 5: Tile plot of cases `r recent.date.range` by laboratory by week, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=10}
+tile.plot.row.laboratory.recent.week
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by requesting organisation by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.request.recent.week
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by requesting organisation by week, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.request.recent.week
+```
+
+
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by specimen type by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.spectype.recent.week
+```
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by specimen type by week, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.spectype.recent.week
+```
+
+
+
+#####
+
+
+## Figure 5: Epidemic curve of cases `r recent.date.range` by travel status by day
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.travel.recent
+```
+
+
+## Figure 7: Epidemic curve of cases `r recent.date.range` by travel status by week
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 8, fig.height=4.5}
+epicurve.travel.recent.week
+```
+
+
+
+#####
+
+## Figure 13: Tile plot of cases `r recent.date.range` by travel status by week, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6.5}
+tile.plot.all.travel.recent.week
+```
+
+
+#####
+
+# Historic cases
+
+## Figure 17: Line graph of cases by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.all.trend.month
+```
+
+
+## Figure 17: Cumulative line graph of cases by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.cum.all.trend.month
+```
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=5}
+tile.plot.all.all.trend.month
+```
+
+
+
+
+
+#####
+
+## Figure 17: Line graph of cases by sex by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.sex.trend.month
+```
+
+
+## Figure 17: Cumulative line graph of cases by sex by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.cum.sex.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by sex by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6}
+tile.plot.all.sex.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by sex by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6}
+tile.plot.row.sex.trend.month
+```
+
+
+#####
+
+## Figure 17: Line graph of cases by age group by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.age.grp.trend.month
+```
+
+
+## Figure 17: Cumulative line graph of cases by age group by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.cum.age.grp.trend.month
+```
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by age group by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+tile.plot.all.age.grp.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by age group by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+tile.plot.row.age.grp.trend.month
+```
+
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by local authority by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.local.authority.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by local authority by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.local.authority.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by laboratory by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.laboratory.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by laboratory by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.laboratory.trend.month
+```
+
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by requesting organisation by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.request.trend.month
+```
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by requesting organisation by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.request.trend.month
+```
+
+
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by specimen type by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.all.spectype.trend.month
+```
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by specimen type by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10.5}
+tile.plot.row.spectype.trend.month
+```
+
+
+
+#####
+
+## Figure 17: Line graph of cases by travel status by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.travel.trend.month
+```
+
+
+## Figure 17: Cumulative line graph of cases by travel status by year-month, `r entire.date.range`
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=4.5}
+line.graph.cum.travel.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by travel status by year-month, shading according to relative count across all tiles
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6}
+tile.plot.all.travel.trend.month
+```
+
+
+#####
+
+## Figure 13: Tile plot of cases `r entire.date.range` by travel status by year-month, shading according to relative count across tiles within the same rows
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6}
+tile.plot.row.travel.trend.month
+```
+
+
+
+#####
+
+# Recent vs Historic cases
+
+
+## Figure 27: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.all.recent.vs.historic
+```
+
+#####
+
+
+## Figure 29: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by week by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.all.recent.vs.historic.week
+```
+
+#####
+
+## Figure 28: Cumulative line graph of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=6}
+line.graph.cum.all.recent.vs.historic
+```
+
+#####
+
+## Figure 28: Tile plot comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by sex by yearly period, shading according to relative count across all tiles 
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+tile.plot.all.all.recent.vs.historic.week
+```
+
+
+#####
+
+## Figure 27: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by sex by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.sex.recent.vs.historic
+```
+
+
+#####
+
+## Figure 30: Epicurve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by sex by week by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=11}
+epicurve.sex.recent.vs.historic.week
+```
+
+
+
+#####
+
+
+## Figure 29: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by age group by week by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.sex.recent.vs.historic.week
+```
+
+
+#####
+
+## Figure 27: Cumulative line graph  of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by sex by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+line.graph.cum.sex.recent.vs.historic
+```
+
+
+
+
+#####
+
+## Figure 28: Tile plot comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by sex by yearly period, shading according to relative count across all within the same group
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+tile.plot.all.sex.recent.vs.historic.week
+
+```
+
+
+#####
+
+
+## Figure 27: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by age group by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.age.grp.recent.vs.historic
+```
+
+
+#####
+
+
+## Figure 29: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by age group by week by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.age.grp.recent.vs.historic.week
+```
+
+
+#####
+
+## Figure 28: Tile plot comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by age group by yearly period, shading according to relative count across all within the same group
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+tile.plot.all.age.grp.recent.vs.historic.week
+```
+
+
+#####
+
+## Table 3: Table of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by local authority by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+panderOptions('table.split.table', Inf)
+pander(table.la.recent.vs.historic)
+```
+
+
+#####
+
+## Figure 49: Bar graph of cases comparing recent cases to histroic average of cases within `r recent.vs.historic.date.range` between `r entire.date.range` by local authority
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+bar.graph.la.recent.vs.historic
+```
+
+
+Note: only local authorities where the number of recent cases is greater than the historic avgerage are presented in the table above
+
+
+
+
+#####
+
+## Table 4: Table of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by laboratory by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+panderOptions('table.split.table', Inf)
+pander(table.lab.recent.vs.historic)
+```
+
+#####
+
+## Figure 50: Bar graph of cases comparing recent cases to histroic average of cases within `r recent.vs.historic.date.range` between `r entire.date.range` by laboratory
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+bar.graph.lab.recent.vs.historic
+```
+
+Note: only laboratories where the number of recent cases is greater than the historic avgerage are presented in the table above
+
+
+
+#####
+
+## Table 4: Table of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by requesting organisation by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+panderOptions('table.split.table', Inf)
+pander(table.request.recent.vs.historic)
+```
+
+#####
+
+## Figure 50: Bar graph of cases comparing recent cases to histroic average of cases within `r recent.vs.historic.date.range` between `r entire.date.range` by requesting organisation
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+bar.graph.request.recent.vs.historic
+```
+
+Note: only requesting organisations where the number of recent cases is greater than the historic avgerage are presented in the table above
+
+
+
+#####
+
+## Table 4: Table of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by specimen type by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=8}
+panderOptions('table.split.table', Inf)
+pander(table.spectype.recent.vs.historic)
+```
+
+#####
+
+## Figure 50: Bar graph of cases comparing recent cases to histroic average of cases within `r recent.vs.historic.date.range` between `r entire.date.range` by specimen type
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+bar.graph.spectype.recent.vs.historic
+```
+
+Note: only specimen types where the number of recent cases is greater than the historic avgerage are presented in the table above
+
+
+
+## Figure 27: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by travel status by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.travel.recent.vs.historic
+```
+
+#####
+
+
+## Figure 29: Epidemic curve of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by travel status by week by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+epicurve.travel.recent.vs.historic.week
+```
+
+
+#####
+
+## Figure 28: Cumulative line graph of cases comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by travel status by yearly period
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+line.graph.cum.travel.recent.vs.historic
+```
+
+
+#####
+
+## Figure 28: Tile plot comparing recent cases to histroic cases within `r recent.vs.historic.date.range` between `r entire.date.range` by travel status by yearly period, shading according to relative count across all within the same group
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, fig.width= 9, fig.height=10}
+tile.plot.all.travel.recent.vs.historic.week
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
