@@ -21,4 +21,4 @@ Stage 2: Generate the automated exceedance descriptive epi report using R
 
 •	A Microsoft Word report is generating using a series of R scripts and a single Rmd script
 
-•	The user may specify a number of parameters depending on the desired output (these include filters to specify appropriate reporting dates, sex, age, laboratory, requesting organisation, specimen type and travel, as well as figure aesthetics) 
+•	The user may specify a number of parameters depending on the desired output (these include filters to specify appropriate reporting dates, age, sex, local authority, laboratory, requesting organisation, specimen type and travel, as well as figure aesthetics) 
